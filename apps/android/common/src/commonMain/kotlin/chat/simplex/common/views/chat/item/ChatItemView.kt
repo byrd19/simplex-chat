@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.*
+import androidx.compose.ui.text.AnnotatedString
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -169,16 +170,17 @@ fun ChatItemView(
                 showMenu.value = false
               })
             }
+            val clipboard = LocalClipboardManager.current
             ItemAction(stringResource(MR.strings.share_verb), painterResource(MR.images.ic_share), onClick = {
               val filePath = getLoadedFilePath(cItem.file)
               when {
                 filePath != null -> shareFile(cItem.text, filePath)
-                else -> shareText(cItem.content.text)
+                else -> clipboard.shareText(cItem.content.text)
               }
               showMenu.value = false
             })
             ItemAction(stringResource(MR.strings.copy_verb), painterResource(MR.images.ic_content_copy), onClick = {
-              copyText(cItem.content.text)
+              clipboard.setText(AnnotatedString(cItem.content.text))
               showMenu.value = false
             })
             if (cItem.content.msgContent is MsgContent.MCImage || cItem.content.msgContent is MsgContent.MCVideo || cItem.content.msgContent is MsgContent.MCFile || cItem.content.msgContent is MsgContent.MCVoice) {

@@ -18,9 +18,9 @@ fun VersionInfoView(info: CoreVersionInfo) {
     Modifier.padding(horizontal = DEFAULT_PADDING),
   ) {
     AppBarTitle(stringResource(MR.strings.app_version_title), false)
-    Text(String.format(stringResource(MR.strings.app_version_name), appVersionInfo.substringBefore(" ")))
+    Text(String.format(stringResource(MR.strings.app_version_name), appVersionInfo.first))
     if (appPlatform == AppPlatform.ANDROID) {
-      Text(String.format(stringResource(MR.strings.app_version_code), appVersionInfo.substringAfter(" ")))
+      Text(String.format(stringResource(MR.strings.app_version_code), appVersionInfo.second))
     }
     Text(String.format(stringResource(MR.strings.core_version), info.version))
     val simplexmqCommit = if (info.simplexmqCommit.length >= 7) info.simplexmqCommit.substring(startIndex = 0, endIndex = 7) else info.simplexmqCommit

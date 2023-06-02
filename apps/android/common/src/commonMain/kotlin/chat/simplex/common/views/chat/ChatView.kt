@@ -107,6 +107,7 @@ fun ChatView(chatId: String, chatModel: ChatModel, onComposed: () -> Unit) {
         chatModel.chats.firstOrNull { chat -> chat.chatInfo.id == chatId }?.chatStats?.unreadCount ?: 0
       }
     }
+    val clipboard = LocalClipboardManager.current
 
     ChatLayout(
       chat,
@@ -272,7 +273,7 @@ fun ChatView(chatId: String, chatModel: ChatModel, onComposed: () -> Unit) {
           val ciInfo = chatModel.controller.apiGetChatItemInfo(cInfo.chatType, cInfo.apiId, cItem.id)
           if (ciInfo != null) {
             ModalManager.shared.showModal(endButtons = { ShareButton {
-              shareText(itemInfoShareText(cItem, ciInfo, chatModel.controller.appPrefs.developerTools.get()))
+              clipboard.shareText(itemInfoShareText(cItem, ciInfo, chatModel.controller.appPrefs.developerTools.get()))
             } }) {
               ChatItemInfoView(cItem, ciInfo, devTools = chatModel.controller.appPrefs.developerTools.get())
             }

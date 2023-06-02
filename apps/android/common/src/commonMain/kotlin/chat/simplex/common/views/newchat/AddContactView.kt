@@ -12,6 +12,7 @@ import dev.icerock.moko.resources.compose.painterResource
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
 import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -23,10 +24,11 @@ import chat.simplex.common.views.usersettings.SettingsActionItem
 
 @Composable
 fun AddContactView(connReqInvitation: String, connIncognito: Boolean) {
+  val clipboard = LocalClipboardManager.current
   AddContactLayout(
     connReq = connReqInvitation,
     connIncognito = connIncognito,
-    share = { shareText(connReqInvitation) },
+    share = { clipboard.shareText(connReqInvitation) },
     learnMore = {
       ModalManager.shared.showModal {
         Column(

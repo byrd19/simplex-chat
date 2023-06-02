@@ -6,7 +6,9 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
 import android.provider.MediaStore
 import android.webkit.MimeTypeMap
-import androidx.core.content.ContextCompat
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.UriHandler
+import chat.simplex.common.helpers.toUri
 import chat.simplex.common.model.CIFile
 import chat.simplex.common.views.helpers.generalGetString
 import chat.simplex.common.views.helpers.getAppFileUri
@@ -14,7 +16,7 @@ import java.io.BufferedOutputStream
 import java.io.File
 import com.icerockdev.library.MR
 
-actual fun shareText(text: String) {
+actual fun ClipboardManager.shareText(text: String) {
   val sendIntent: Intent = Intent().apply {
     action = Intent.ACTION_SEND
     putExtra(Intent.EXTRA_TEXT, text)
@@ -35,7 +37,7 @@ actual fun shareFile(text: String, filePath: String) {
     /*if (text.isNotEmpty()) {
       putExtra(Intent.EXTRA_TEXT, text)
     }*/
-    putExtra(Intent.EXTRA_STREAM, uri)
+    putExtra(Intent.EXTRA_STREAM, uri.toUri())
     type = mimeType
     flags = Intent.FLAG_ACTIVITY_NEW_TASK
   }
@@ -44,12 +46,7 @@ actual fun shareFile(text: String, filePath: String) {
   androidAppContext.startActivity(shareIntent)
 }
 
-actual fun copyText(text: String) {
-  val clipboard = ContextCompat.getSystemService(androidAppContext, ClipboardManager::class.java)
-  clipboard?.setPrimaryClip(ClipData.newPlainText("text", text))
-}
-
-actual fun sendEmail(subject: String, body: CharSequence) {
+actual fun UriHandler.sendEmail(subject: String, body: CharSequence) {
   val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"))
   emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
   emailIntent.putExtra(Intent.EXTRA_TEXT, body)

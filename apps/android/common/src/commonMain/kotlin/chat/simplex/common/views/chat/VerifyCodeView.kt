@@ -10,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -87,7 +88,8 @@ private fun VerifyCodeLayout(
         )
       }
       Box(Modifier.weight(1f)) {
-        IconButton({ shareText(connectionCode) }, Modifier.size(20.dp).align(Alignment.CenterStart)) {
+        val clipboard = LocalClipboardManager.current
+        IconButton({ clipboard.shareText(connectionCode) }, Modifier.size(20.dp).align(Alignment.CenterStart)) {
           Icon(painterResource(MR.images.ic_share_filled), null, tint = MaterialTheme.colors.primary)
         }
       }

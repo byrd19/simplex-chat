@@ -5,9 +5,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.sp
 
-// https://github.com/rsms/inter
-expect val Inter: FontFamily
-
 // Set of Material typography styles to start with
 val Typography = Typography(
   h1 = TextStyle(

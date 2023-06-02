@@ -351,7 +351,7 @@ fun ChatLockItem(
 }
 
 @Composable fun AppVersionText() {
-  Text(appVersionInfo)
+  Text(appVersionInfo.first + (if (appVersionInfo.second != null) " (" + appVersionInfo.second + ")" else ""))
 }
 
 @Composable fun ProfilePreview(profileOf: NamedChat, size: Dp = 60.dp, iconColor: Color = MaterialTheme.colors.secondaryVariant, textColor: Color = MaterialTheme.colors.onBackground, stopped: Boolean = false) {

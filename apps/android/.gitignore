@@ -17,7 +17,9 @@
 .externalNativeBuild
 .cxx
 local.properties
-android/src/main/cpp/libs/
+android/src/main/cpp/android/libs/
+android/src/main/cpp/desktop/libs/
+common/src/commonMain/resources/libs/
 android/build
 common/build
 desktop/build

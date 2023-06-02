@@ -9,6 +9,7 @@ import android.media.*
 import android.os.Build
 import android.os.PowerManager
 import android.os.PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK
+import android.view.ViewGroup
 import android.webkit.*
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
@@ -25,6 +26,7 @@ import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.webkit.WebViewAssetLoader
@@ -452,7 +454,7 @@ fun WebRTCView(callCommand: MutableState<WCallCommand?>, onResponse: (WVAPIMessa
 
   if (permissionsState.allPermissionsGranted) {
     Box(Modifier.fillMaxSize()) {
-      /*AndroidView(
+      AndroidView(
         factory = { AndroidViewContext ->
           WebView(AndroidViewContext).apply {
             layoutParams = ViewGroup.LayoutParams(
@@ -491,7 +493,7 @@ fun WebRTCView(callCommand: MutableState<WCallCommand?>, onResponse: (WVAPIMessa
           wv.evaluateJavascript("sendMessageToNative = (msg) => WebRTCInterface.postMessage(JSON.stringify(msg))", null)
           webView.value = wv
         }
-      }*/
+      }
     }
   }
 }

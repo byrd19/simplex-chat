@@ -14,6 +14,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
@@ -25,7 +27,6 @@ import chat.simplex.common.views.chat.item.MarkdownText
 import chat.simplex.common.views.helpers.*
 import chat.simplex.common.model.ChatModel
 import chat.simplex.common.model.GroupInfo
-import chat.simplex.common.platform.copyText
 import kotlinx.coroutines.delay
 
 @Composable
@@ -100,15 +101,17 @@ private fun GroupWelcomeLayout(
         },
         wt.value.isEmpty()
       )
-      CopyTextButton { copyText(wt.value) }
+      val clipboard = LocalClipboardManager.current
+      CopyTextButton { clipboard.setText(AnnotatedString(wt.value)) }
       SectionDividerSpaced(maxBottomPadding = false)
       SaveButton(
         save = save,
         disabled = wt.value == groupInfo.groupProfile.description || (wt.value == "" && groupInfo.groupProfile.description == null)
       )
     } else {
+      val clipboard = LocalClipboardManager.current
       TextPreview(wt.value, linkMode)
-      CopyTextButton { copyText(wt.value) }
+      CopyTextButton { clipboard.setText(AnnotatedString(wt.value)) }
     }
     SectionBottomSpacer()
   }

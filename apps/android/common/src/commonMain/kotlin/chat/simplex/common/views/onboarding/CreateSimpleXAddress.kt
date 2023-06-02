@@ -9,6 +9,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalUriHandler
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -26,12 +28,14 @@ import chat.simplex.common.views.newchat.QRCode
 fun CreateSimpleXAddress(m: ChatModel) {
   var progressIndicator by remember { mutableStateOf(false) }
   val userAddress = remember { m.userAddress }
+  val clipboard = LocalClipboardManager.current
+  val uriHandler = LocalUriHandler.current
 
   CreateSimpleXAddressLayout(
     userAddress.value,
-    share = { address: String -> shareText(address) },
+    share = { address: String -> clipboard.shareText(address) },
     sendEmail = { address ->
-      sendEmail(
+      uriHandler.sendEmail(
         generalGetString(MR.strings.email_invite_subject),
         generalGetString(MR.strings.email_invite_body).format(address.connReqContact)
       )

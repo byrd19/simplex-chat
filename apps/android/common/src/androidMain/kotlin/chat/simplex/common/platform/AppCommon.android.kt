@@ -25,7 +25,7 @@ lateinit var mainActivity: WeakReference<FragmentActivity>
 lateinit var serviceStart: suspend () -> Unit
 lateinit var serviceSafeStop: () -> Unit
 
-actual val appVersionInfo = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
+actual val appVersionInfo: Pair<String, String?> = BuildConfig.VERSION_NAME to BuildConfig.VERSION_CODE
 
 
 actual fun initHaskell(socketName: String) {

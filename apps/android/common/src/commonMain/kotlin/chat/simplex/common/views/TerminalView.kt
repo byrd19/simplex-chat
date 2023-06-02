@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
@@ -114,6 +115,7 @@ fun TerminalLog(terminalItems: List<TerminalItem>) {
     onDispose { lazyListState = listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset }
   }
   val reversedTerminalItems by remember { derivedStateOf { terminalItems.reversed().toList() } }
+  val clipboard = LocalClipboardManager.current
   LazyColumn(state = listState, reverseLayout = true) {
     items(reversedTerminalItems) { item ->
       Text(
@@ -124,7 +126,7 @@ fun TerminalLog(terminalItems: List<TerminalItem>) {
         modifier = Modifier
           .fillMaxWidth()
           .clickable {
-            ModalManager.shared.showModal(endButtons = { ShareButton { shareText(item.details) } }) {
+            ModalManager.shared.showModal(endButtons = { ShareButton { clipboard.shareText(item.details) } }) {
               SelectionContainer(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 Text(item.details, modifier = Modifier.padding(horizontal = DEFAULT_PADDING).padding(bottom = DEFAULT_PADDING))
               }

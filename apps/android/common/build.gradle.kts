@@ -122,14 +122,14 @@ android {
 * compose {
     desktop {
         application {
-            mainClass = "me.amikhailov.common.MainKt"
+            mainClass = "chat.simplex.common.MainKt"
             nativeDistributions {
                 targetFormats(
                     org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg,
                     org.jetbrains.compose.desktop.application.dsl.TargetFormat.Msi,
                     org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb
                 )
-                packageName = "MokoDesktopApp"
+                packageName = "simplex"
                 version = "1.0.0"
             }
         }
@@ -140,7 +140,7 @@ android {
 cmake {
   targets {
     val main by creating {
-      cmakeLists.set(file("../android/src/main/cpp/CMakeLists.txt"))
+      cmakeLists.set(file("../android/src/main/cpp/desktop/CMakeLists.txt"))
       targetMachines.add(machines.host)
     }
   }

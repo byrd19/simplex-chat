@@ -15,6 +15,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalUriHandler
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
@@ -55,6 +57,8 @@ fun UserAddressView(
     }
   }
   val userAddress = remember { chatModel.userAddress }
+  val clipboard = LocalClipboardManager.current
+  val uriHandler = LocalUriHandler.current
   val showLayout = @Composable {
     UserAddressLayout(
       userAddress = userAddress.value,
@@ -93,9 +97,9 @@ fun UserAddressView(
           }
         }
       },
-      share = { userAddress: String -> shareText(userAddress) },
+      share = { userAddress: String -> clipboard.shareText(userAddress) },
       sendEmail = { userAddress ->
-        sendEmail(
+        uriHandler.sendEmail(
           generalGetString(MR.strings.email_invite_subject),
           generalGetString(MR.strings.email_invite_body).format(userAddress.connReqContact)
         )

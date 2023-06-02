@@ -1,12 +1,11 @@
 package chat.simplex.common.platform
 
+import chat.simplex.common.DesktopApp
 import chat.simplex.common.model.ChatController
 import java.io.*
-import java.net.ServerSocket
+import java.net.URL
+import java.nio.file.Files
 import java.util.*
-import java.util.concurrent.Semaphore
-import kotlin.concurrent.thread
-import kotlin.random.Random
 
 actual val appPlatform = AppPlatform.DESKTOP
 
@@ -25,49 +24,22 @@ private fun applyAppLocale() {
 }
 
 // LALAL
-actual val appVersionInfo: String = "1.0"
+actual val appVersionInfo: Pair<String, String?> = "1.0" to null
 
-// LALAL make with port, not socket name
 actual fun initHaskell(socketName: String) {
-  val s = Semaphore(0)
-  thread(name="stdout/stderr pipe") {
-    Log.d(TAG, "starting server")
-    var server: ServerSocket? = null
-    val port = Random.nextInt(1024, 65535 - 100)
-    for (i in 0..100) {
-      try {
-        server = ServerSocket(port + i)
-        break
-      } catch (e: IOException) {
-        Log.e(TAG, e.stackTraceToString())
-      }
-    }
-    if (server == null) {
-      throw Error("Unable to setup local server socket. Contact developers")
-    }
-    Log.d(TAG, "started server")
-    s.release()
-    val receiver = server.accept()
-    Log.d(TAG, "started receiver")
-    val logbuffer = FifoQueue<String>(500)
-    if (receiver != null) {
-      val inStream = receiver.inputStream
-      val inStreamReader = InputStreamReader(inStream)
-      val input = BufferedReader(inStreamReader)
-      Log.d(TAG, "starting receiver loop")
-      while (true) {
-        val line = input.readLine() ?: break
-        Log.w("$TAG (stdout/stderr)", line)
-        logbuffer.add(line)
-      }
-      Log.w(TAG, "exited receiver loop")
-    }
-  }
-
-  System.loadLibrary("app-lib")
-
-  s.acquire()
-  pipeStdOutToSocket(socketName)
-
+  val libName1 = "libapp-lib.so"
+  val libName2 = "libHSsimplex-chat-5.1.0.1-inplace-ghc8.10.7.so"
+  val url1: URL = DesktopApp::class.java.getResource("/libs/$libName1")!!
+  val url2: URL = DesktopApp::class.java.getResource("/libs/$libName2")!!
+  val tmpDir = Files.createTempDirectory("simplex-native-libs").toFile()
+  tmpDir.deleteOnExit()
+  val nativeLibTmpFile1 = File(tmpDir, libName1)
+  val nativeLibTmpFile2 = File(tmpDir, libName2)
+  nativeLibTmpFile1.deleteOnExit()
+  url1.openStream().use { input -> Files.copy(input, nativeLibTmpFile1.toPath()) }
+  nativeLibTmpFile2.deleteOnExit()
+  url2.openStream().use { input -> Files.copy(input, nativeLibTmpFile2.toPath()) }
+  System.load(nativeLibTmpFile2.absolutePath)
+  System.load(nativeLibTmpFile1.absolutePath)
   initHS()
 }

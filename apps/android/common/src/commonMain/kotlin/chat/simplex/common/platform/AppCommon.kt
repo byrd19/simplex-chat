@@ -12,7 +12,7 @@ enum class AppPlatform {
 
 expect val appPlatform: AppPlatform
 
-expect val appVersionInfo: String
+expect val appVersionInfo: Pair<String, String?>
 
 expect fun initHaskell(socketName: String)
 

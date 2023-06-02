@@ -12,7 +12,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.AnnotatedString
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.text.font.FontStyle
@@ -25,8 +27,6 @@ import chat.simplex.common.ui.theme.DEFAULT_PADDING
 import chat.simplex.common.views.chat.item.ItemAction
 import chat.simplex.common.views.chat.item.MarkdownText
 import chat.simplex.common.views.helpers.*
-import chat.simplex.common.model.*
-import chat.simplex.common.platform.copyText
 import chat.simplex.common.platform.shareText
 
 @Composable
@@ -82,13 +82,15 @@ fun ChatItemInfoView(ci: ChatItem, ciInfo: ChatItemInfo, devTools: Boolean) {
         }
       }
       if (text != "") {
+        val clipboard = LocalClipboardManager.current
         DefaultDropdownMenu(showMenu) {
           ItemAction(stringResource(MR.strings.share_verb), painterResource(MR.images.ic_share), onClick = {
-            shareText(text)
+            clipboard.shareText(text)
             showMenu.value = false
           })
+          val clipboard = LocalClipboardManager.current
           ItemAction(stringResource(MR.strings.copy_verb), painterResource(MR.images.ic_content_copy), onClick = {
-            copyText(text)
+            clipboard.setText(AnnotatedString(text))
             showMenu.value = false
           })
         }

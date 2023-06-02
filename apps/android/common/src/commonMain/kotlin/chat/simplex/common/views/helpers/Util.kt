@@ -265,7 +265,7 @@ fun blendARGB(
   val r: Float = color1.red * inverseRatio + color2.red * ratio
   val g: Float = color1.green * inverseRatio + color2.green * ratio
   val b: Float = color1.blue * inverseRatio + color2.blue * ratio
-  return Color(r.toInt(), g.toInt(), b.toInt(), a.toInt())
+  return Color(r, g, b, a)
 }
 
 fun ByteArray.toBase64String(): String = Base64.getEncoder().encodeToString(this)

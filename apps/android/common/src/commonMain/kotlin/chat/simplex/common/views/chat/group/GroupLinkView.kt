@@ -10,6 +10,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
@@ -43,13 +44,14 @@ fun GroupLinkView(chatModel: ChatModel, groupInfo: GroupInfo, connReqContact: St
       createLink()
     }
   }
+  val clipboard = LocalClipboardManager.current
   GroupLinkLayout(
     groupLink = groupLink,
     groupInfo,
     groupLinkMemberRole,
     creatingLink,
     createLink = ::createLink,
-    share = { shareText(groupLink ?: return@GroupLinkLayout) },
+    share = { clipboard.shareText(groupLink ?: return@GroupLinkLayout) },
     updateLink = {
       val role = groupLinkMemberRole.value
       if (role != null) {

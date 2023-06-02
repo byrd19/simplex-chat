@@ -3,10 +3,15 @@ package chat.simplex.common.ui.theme
 import androidx.compose.material.Colors
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.font.FontFamily
 import com.icerockdev.library.MR
 import chat.simplex.common.model.AppPreferences
 import chat.simplex.common.model.ChatController
 import chat.simplex.common.views.helpers.generalGetString
+
+// https://github.com/rsms/inter
+// I place it here because IDEA shows an error (but still works anyway) when this declaration inside Type.kt
+expect val Inter: FontFamily
 
 object ThemeManager {
   private val appPrefs: AppPreferences = ChatController.appPrefs

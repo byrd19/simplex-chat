@@ -11,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 import com.icerockdev.library.MR
@@ -46,6 +47,7 @@ fun ContactConnectionInfoView(
       }
     }
   }
+  val clipboard = LocalClipboardManager.current
   ContactConnectionInfoLayout(
     connReq = connReqInvitation,
     contactConnection,
@@ -53,7 +55,7 @@ fun ContactConnectionInfoView(
     focusAlias,
     deleteConnection = { deleteContactConnectionAlert(contactConnection, chatModel, close) },
     onLocalAliasChanged = { setContactAlias(contactConnection, it, chatModel) },
-    share = { if (connReqInvitation != null) shareText(connReqInvitation) },
+    share = { if (connReqInvitation != null) clipboard.shareText(connReqInvitation) },
     learnMore = {
       ModalManager.shared.showModal {
         Column(

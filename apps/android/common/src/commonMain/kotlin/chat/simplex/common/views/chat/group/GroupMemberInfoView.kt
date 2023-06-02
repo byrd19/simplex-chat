@@ -15,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -203,7 +204,8 @@ fun GroupMemberInfoLayout(
     if (member.contactLink != null) {
       SectionView(stringResource(MR.strings.address_section_title).uppercase()) {
         QRCode(member.contactLink, Modifier.padding(horizontal = DEFAULT_PADDING, vertical = DEFAULT_PADDING_HALF).aspectRatio(1f))
-        ShareAddressButton { shareText(member.contactLink) }
+        val clipboard = LocalClipboardManager.current
+        ShareAddressButton { clipboard.shareText(member.contactLink) }
         if (contactId != null) {
           if (knownDirectChat(contactId) == null && !groupInfo.fullGroupPreferences.directMessages.on) {
             ConnectViaAddressButton(onClick = { connectViaAddress(member.contactLink) })

@@ -67,7 +67,7 @@ android {
     }
     externalNativeBuild {
         cmake {
-            path(File("src/main/cpp/CMakeLists.txt"))
+            path(File("src/main/cpp/android/CMakeLists.txt"))
         }
     }
     buildTypes {

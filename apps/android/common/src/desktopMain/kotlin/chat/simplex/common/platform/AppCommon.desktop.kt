@@ -28,7 +28,7 @@ actual val appVersionInfo: Pair<String, String?> = "1.0" to null
 
 actual fun initHaskell(socketName: String) {
   val libName1 = "libapp-lib.so"
-  val libName2 = "libHSsimplex-chat-5.1.0.1-inplace-ghc8.10.7.so"
+  val libName2 = "libsimplex.a"
   val url1: URL = DesktopApp::class.java.getResource("/libs/$libName1")!!
   val url2: URL = DesktopApp::class.java.getResource("/libs/$libName2")!!
   val tmpDir = Files.createTempDirectory("simplex-native-libs").toFile()

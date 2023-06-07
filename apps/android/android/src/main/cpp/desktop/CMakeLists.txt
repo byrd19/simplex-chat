@@ -40,7 +40,7 @@ find_library( # Sets the name of the path variable.
 
 add_library( simplex SHARED IMPORTED )
 set_target_properties( simplex PROPERTIES IMPORTED_LOCATION
-    ${CMAKE_SOURCE_DIR}/libs/linux-x86_64/libsimplex.so)
+    ${CMAKE_SOURCE_DIR}/libs/linux-x86_64/libsimplex.a)
 
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this

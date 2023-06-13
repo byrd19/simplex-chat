@@ -20,6 +20,7 @@ local.properties
 android/src/main/cpp/android/libs/
 android/src/main/cpp/desktop/libs/
 common/src/commonMain/resources/libs/
+app/build
 android/build
 common/build
 desktop/build

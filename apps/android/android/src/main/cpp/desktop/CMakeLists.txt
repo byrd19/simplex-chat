@@ -1,12 +1,19 @@
-include_directories("/usr/lib/jvm/default/include")
-include_directories("/usr/lib/jvm/default/include/linux")
+# Manually downloaded headers because `find_package(JNI REQUIRED)` doesn't work while cross-compiling:
+
+# https://raw.githubusercontent.com/openjdk/jdk/master/src/java.base/share/native/include/jni.h
+include_directories(${CMAKE_SOURCE_DIR}/include)
+if(UNIX)
+    # https://raw.githubusercontent.com/openjdk/jdk/master/src/java.base/unix/native/include/jni_md.h
+    include_directories(${CMAKE_SOURCE_DIR}/include/unix)
+elseif(WIN32)
+    # https://raw.githubusercontent.com/openjdk/jdk/master/src/java.base/windows/native/include/jni_md.h
+    include_directories(${CMAKE_SOURCE_DIR}/include/windows)
+endif()
 
 # Sets the minimum version of CMake required to build the native library.
-
 cmake_minimum_required(VERSION 3.10.2)
 
 # Declares and names the project.
-
 project("app")
 
 # Creates and names a library, sets it as either STATIC
@@ -29,14 +36,14 @@ add_library( # Sets the name of the library.
 # you want to add. CMake verifies that the library exists before
 # completing its build.
 
-find_library( # Sets the name of the path variable.
-    c-lib
+#find_library( # Sets the name of the path variable.
+#    c-lib
 
     # Specifies the name of the NDK library that
     # you want CMake to locate.
-    c
-    NAMES libc.so
-    REQUIRED)
+#    c
+#    NAMES libc.so
+#    REQUIRED)
 
 add_library( simplex SHARED IMPORTED )
 set_target_properties( simplex PROPERTIES IMPORTED_LOCATION

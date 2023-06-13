@@ -138,10 +138,30 @@ android {
 * */
 
 cmake {
+  // Run this command to make build for all targets:
+  // ./gradlew common:cmakeBuild -PcrossCompile
+  if (project.hasProperty("crossCompile")) {
+    machines.customMachines.register("linux-amd64") {
+      toolchainFile.set(project.file("../android/src/main/cpp/toolchains/x86_64-linux-gnu-gcc.cmake"))
+    }
+    /*machines.customMachines.register("linux-aarch64") {
+      toolchainFile.set(project.file("../android/src/main/cpp/toolchains/aarch64-linux-gnu-gcc.cmake"))
+    }*/
+    machines.customMachines.register("win-amd64") {
+      toolchainFile.set(project.file("../android/src/main/cpp/toolchains/x86_64-windows-mingw32-gcc.cmake"))
+    }
+    if (machines.host.name == "mac-amd64") {
+      machines.customMachines.register("mac-amd64") {
+        toolchainFile.set(project.file("../android/src/main/cpp/toolchains/x86_64-mac-apple-darwin-gcc.cmake"))
+      }
+    }
+  }
+  val compileMachineTargets = arrayListOf<com.github.tomtzook.gcmake.targets.TargetMachine>(machines.host)
+  compileMachineTargets.addAll(machines.customMachines)
   targets {
     val main by creating {
       cmakeLists.set(file("../android/src/main/cpp/desktop/CMakeLists.txt"))
-      targetMachines.add(machines.host)
+      targetMachines.addAll(compileMachineTargets.toSet())
     }
   }
 }

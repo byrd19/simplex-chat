@@ -23,6 +23,7 @@ import androidx.lifecycle.*
 import chat.simplex.app.MainActivity.Companion.enteredBackground
 import chat.simplex.app.model.NtfManager
 import chat.simplex.app.model.NtfManager.getUserIdFromIntent
+import chat.simplex.common.InitializationView
 import chat.simplex.common.helpers.*
 import chat.simplex.common.ui.theme.*
 import chat.simplex.common.views.SplashView
@@ -552,22 +553,6 @@ fun MainPage(
     // Let's prolong the unlocked period to 3 sec for screen rotation to take place
     if (chatModel.controller.appPrefs.laLockDelay.get() == 0) {
       enteredBackground.value = elapsedRealtime() + 3000
-    }
-  }
-}
-
-@Composable
-private fun InitializationView() {
-  Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-      CircularProgressIndicator(
-        Modifier
-          .padding(bottom = DEFAULT_PADDING)
-          .size(30.dp),
-        color = MaterialTheme.colors.secondary,
-        strokeWidth = 2.5.dp
-      )
-      Text(stringResource(MR.strings.opening_database))
     }
   }
 }

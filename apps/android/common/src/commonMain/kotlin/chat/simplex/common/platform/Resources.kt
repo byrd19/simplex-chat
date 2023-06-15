@@ -26,3 +26,5 @@ expect fun screenOrientation(): ScreenOrientation
 
 @Composable
 expect fun screenWidthDp(): Int
+
+expect fun isRtl(text: CharSequence): Boolean

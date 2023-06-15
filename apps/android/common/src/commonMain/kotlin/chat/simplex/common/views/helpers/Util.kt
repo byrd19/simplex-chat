@@ -147,7 +147,7 @@ fun saveAnimImage(uri: URI): String? {
   }
 }
 
-expect fun saveTempImageUncompressed(image: ImageBitmap, asPng: Boolean): File?
+expect suspend fun saveTempImageUncompressed(image: ImageBitmap, asPng: Boolean): File?
 
 fun saveFileFromUri(uri: URI): String? {
   return try {

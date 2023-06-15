@@ -265,7 +265,7 @@ actual fun getDrawableFromUri(uri: URI, withAlertOnException: Boolean): Any? {
   }
 }
 
-actual fun saveTempImageUncompressed(image: ImageBitmap, asPng: Boolean): File? {
+actual suspend fun saveTempImageUncompressed(image: ImageBitmap, asPng: Boolean): File? {
   return try {
     val ext = if (asPng) "png" else "jpg"
     return File(getTempFilesDirectory() + File.separator + generateNewFileName("IMG", ext)).apply {

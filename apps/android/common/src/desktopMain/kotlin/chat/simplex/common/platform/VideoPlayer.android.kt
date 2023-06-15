@@ -15,8 +15,8 @@ actual class VideoPlayer: VideoPlayerInterface {
     ): VideoPlayer = VideoPlayer()
     actual fun enableSound(enable: Boolean, fileName: String?, gallery: Boolean): Boolean { TODO() }
     actual fun release(uri: URI, gallery: Boolean, remove: Boolean) { TODO() }
-    actual fun stopAll() { TODO() }
-    actual fun releaseAll() { TODO() }
+    actual fun stopAll() { /*LALAL*/ }
+    actual fun releaseAll() { /*LALAL*/ }
   }
 
   override val soundEnabled: MutableState<Boolean>

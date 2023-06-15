@@ -5,6 +5,7 @@ import android.app.UiModeManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.text.BidiFormatter
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -44,3 +45,5 @@ actual fun screenOrientation(): ScreenOrientation = when (mainActivity.get()?.re
 
 @Composable
 actual fun screenWidthDp(): Int = LocalConfiguration.current.screenWidthDp
+
+actual fun isRtl(text: CharSequence): Boolean = BidiFormatter.getInstance().isRtl(text)

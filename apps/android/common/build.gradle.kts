@@ -96,6 +96,7 @@ kotlin {
     val desktopMain by getting {
       dependencies {
         implementation("dev.icerock.moko:resources:0.22.3")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.1")
       }
     }
     val desktopTest by getting

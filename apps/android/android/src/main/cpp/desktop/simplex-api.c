@@ -3,10 +3,6 @@
 // from the RTS
 void hs_init(int * argc, char **argv[]);
 
-// from android-support
-void setLineBuffering(void);
-int pipe_std_to_socket(const char * name);
-
 extern void __svfscanf(void){};
 extern void __vfwscanf(void){};
 extern void __memset_chk_fail(void){};
@@ -18,18 +14,9 @@ extern void __rel_iplt_start(void){};
 // Android 9 only, not 13
 extern void reallocarray(void){};
 
-JNIEXPORT jint JNICALL
-Java_chat_simplex_common_platform_BackendKt_pipeStdOutToSocket(JNIEnv *env, jclass clazz, jstring socket_name) {
-    const char *name = (*env)->GetStringUTFChars(env, socket_name, JNI_FALSE);
-    int ret = pipe_std_to_socket(name);
-    (*env)->ReleaseStringUTFChars(env, socket_name, name);
-    return ret;
-}
-
 JNIEXPORT void JNICALL
 Java_chat_simplex_common_platform_BackendKt_initHS(JNIEnv *env, jclass clazz) {
     hs_init(NULL, NULL);
-    setLineBuffering();
 }
 
 // from simplex-chat

@@ -11,7 +11,7 @@ import java.util.*
 
 @Composable
 actual fun font(name: String, res: String, weight: FontWeight, style: FontStyle): Font =
-  androidx.compose.ui.text.platform.Font("font/$res.ttf", weight, style)
+  androidx.compose.ui.text.platform.Font("MR/fonts/$res.ttf", weight, style)
 
 actual fun StringResource.localized(): String = desc().toString()
 
@@ -24,4 +24,6 @@ actual val settingsThemes: Settings = PropertiesSettings(Properties())
 actual fun screenOrientation(): ScreenOrientation = ScreenOrientation.UNDEFINED
 
 @Composable // LALAL
-actual fun screenWidthDp(): Int = 1000000
+actual fun screenWidthDp(): Int = java.awt.Toolkit.getDefaultToolkit().screenSize.width.also { println("LALAL $it") }// LALAL java.awt.Desktop.getDesktop()
+
+actual fun isRtl(text: CharSequence): Boolean = false // LALAL

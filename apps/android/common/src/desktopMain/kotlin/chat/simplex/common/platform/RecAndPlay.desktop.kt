@@ -10,7 +10,8 @@ actual class RecorderNative: RecorderInterface {
   }
 
   override fun stop(): Int {
-    TODO("Not yet implemented")
+    /*LALAL*/
+    return 0
   }
 }
 
@@ -20,11 +21,11 @@ actual object AudioPlayer: AudioPlayerInterface {
   }
 
   override fun stop() {
-    TODO("Not yet implemented")
+    /*LALAL*/
   }
 
   override fun stop(item: ChatItem) {
-    TODO("Not yet implemented")
+    /*LALAL*/
   }
 
   override fun stop(fileName: String?) {

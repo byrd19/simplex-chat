@@ -95,7 +95,7 @@ actual fun ImageBitmap.addLogo(): ImageBitmap = asAndroidBitmap().applyCanvas {
   val paint = android.graphics.Paint()
   paint.color = android.graphics.Color.WHITE
   drawCircle(width / 2f, height / 2f, radius, paint)
-  val logo = androidAppContext.resources.getDrawable(R.drawable.icon_foreground_common, null).toBitmap()
+  val logo = androidAppContext.resources.getDrawable(R.drawable.icon_foreground_android_common, null).toBitmap()
   val logoSize = (width * 0.24).toInt()
   translate((width - logoSize) / 2f, (height - logoSize) / 2f)
   drawBitmap(logo, null, android.graphics.Rect(0, 0, logoSize, logoSize), null)

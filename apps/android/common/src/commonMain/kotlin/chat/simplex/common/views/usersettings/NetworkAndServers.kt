@@ -19,8 +19,7 @@ import androidx.compose.ui.Modifier
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.text.*
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -225,7 +224,7 @@ fun UseSocksProxySwitch(
       }
       ClickableText(
         text,
-        style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 16.sp, fontFamily = FontFamily(font("inter_regular", "inter_regular"))),
+        style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 16.sp, fontFamily = Inter, fontWeight = FontWeight.Normal),
         onClick = { offset ->
           text.getStringAnnotations(tag = "PORT", start = offset, end = offset)
             .firstOrNull()?.let { _ ->

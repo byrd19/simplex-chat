@@ -1,11 +1,11 @@
 package chat.simplex.common.platform
 
 import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import chat.simplex.common.simplexWindowState
 import chat.simplex.common.views.helpers.KeyboardState
 
-actual fun showToast(text: String) {
-
+actual fun showToast(text: String, timeout: Long) {
+  simplexWindowState.toasts.add(text to timeout)
 }
 
 @Composable

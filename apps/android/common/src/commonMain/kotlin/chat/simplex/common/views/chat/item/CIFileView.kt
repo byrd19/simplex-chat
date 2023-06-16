@@ -95,7 +95,9 @@ fun CIFileView(
         is CIFileStatus.RcvComplete -> {
           val filePath = getLoadedFilePath(file)
           if (filePath != null) {
-            saveFileLauncher.launch(file.fileName)
+            withApi {
+              saveFileLauncher.launch(file.fileName)
+            }
           } else {
             showToast(generalGetString(MR.strings.file_not_found))
           }

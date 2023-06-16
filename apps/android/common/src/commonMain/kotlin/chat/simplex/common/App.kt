@@ -37,7 +37,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
-
 object App {
   /**
    * We don't want these values to be bound to Activity lifecycle since activities are changed often, for example, when a user
@@ -46,6 +45,7 @@ object App {
    * */
   val userAuthorized = mutableStateOf<Boolean?>(null)
   val enteredBackground = mutableStateOf<Long?>(null)
+
   // Remember result and show it after orientation change
   internal val laFailed = mutableStateOf(false)
   internal val destroyedAfterBackPress = mutableStateOf(false)
@@ -58,19 +58,17 @@ object App {
 
 @Composable
 fun App() {
-  SimpleXTheme {
-    ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
-      Surface(color = MaterialTheme.colors.background) {
-        MainPage(
-          ChatModel,
-          userAuthorized,
-          laFailed,
-          destroyedAfterBackPress,
-          ::runAuthenticate,
-          ::setPerformLA,
-          showLANotice = { showLANotice(ChatModel.controller.appPrefs.laNoticeShown) }
-        )
-      }
+  ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
+    Surface(color = MaterialTheme.colors.background) {
+      MainPage(
+        ChatModel,
+        userAuthorized,
+        laFailed,
+        destroyedAfterBackPress,
+        ::runAuthenticate,
+        ::setPerformLA,
+        showLANotice = { showLANotice(ChatModel.controller.appPrefs.laNoticeShown) }
+      )
     }
   }
 }
@@ -157,6 +155,7 @@ fun MainPage(
           DatabaseErrorView(chatModel.chatDbStatus, chatModel.controller.appPrefs).also { println("LALAL 2") }
         }
       }
+
       onboarding == null || userCreated == null -> SplashView().also { println("LALAL 3") }
       onboarding == OnboardingStage.OnboardingComplete && userCreated -> {
         Box {
@@ -206,6 +205,7 @@ fun MainPage(
           }
         }.also { println("LALAL 4") }
       }
+
       onboarding == OnboardingStage.Step1_SimpleXInfo -> SimpleXInfo(chatModel, onboarding = true).also { println("LALAL 5") }
       onboarding == OnboardingStage.Step2_CreateProfile -> CreateProfile(chatModel) {}.also { println("LALAL 6") }
       onboarding == OnboardingStage.Step3_CreateSimpleXAddress -> CreateSimpleXAddress(chatModel).also { println("LALAL 7") }

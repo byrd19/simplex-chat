@@ -34,7 +34,7 @@ fun ChatArchiveView(m: ChatModel, title: String, archiveName: String, archiveTim
   ChatArchiveLayout(
     title,
     archiveTime,
-    saveArchive = { saveArchiveLauncher.launch(archivePath.substringAfterLast("/")) },
+    saveArchive = { withApi { saveArchiveLauncher.launch(archivePath.substringAfterLast("/")) }},
     deleteArchiveAlert = { deleteArchiveAlert(m, archivePath) }
   )
 }

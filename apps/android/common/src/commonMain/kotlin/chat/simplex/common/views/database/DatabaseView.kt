@@ -199,7 +199,7 @@ fun DatabaseLayout(
       SettingsActionItem(
         painterResource(MR.images.ic_download),
         stringResource(MR.strings.import_database),
-        { importArchiveLauncher.launch("application/zip") },
+        { withApi { importArchiveLauncher.launch("application/zip") }},
         textColor = Color.Red,
         iconColor = Color.Red,
         disabled = operationsDisabled

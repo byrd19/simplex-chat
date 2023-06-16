@@ -2,6 +2,7 @@ package chat.simplex.common.platform
 
 import androidx.compose.runtime.*
 import chat.simplex.common.DesktopApp
+import chat.simplex.common.simplexWindowState
 import java.io.*
 import java.net.URI
 
@@ -14,25 +15,26 @@ private fun applicationParentPath(): String = try {
   "./"
 }
 
-// LALAL
-actual val dataDir: File = File(applicationParentPath())
+actual val dataDir: File = File(platform.configPath)
 actual val tmpDir: File = File(System.getProperty("java.io.tmpdir"))
 actual val cacheDir: File = tmpDir
 
 @Composable
 actual fun rememberFileChooserLauncher(getContent: Boolean, onResult: (URI?) -> Unit): FileChooserLauncher =
-  remember { FileChooserLauncher(onResult) }
+  remember { FileChooserLauncher(getContent, onResult) }
 
 actual class FileChooserLauncher actual constructor() {
+  var getContent: Boolean = false
   lateinit var onResult: (URI?) -> Unit
 
-  constructor(onResult: (URI?) -> Unit): this() {
+  constructor(getContent: Boolean, onResult: (URI?) -> Unit): this() {
+    this.getContent = getContent
     this.onResult = onResult
   }
 
-  actual fun launch(input: String) {
-    // LALAL
-    onResult(null)
+  actual suspend fun launch(input: String) {
+    val res = if (getContent) simplexWindowState.openDialog.awaitResult() else simplexWindowState.saveDialog.awaitResult()
+    onResult(if (!getContent && input.isNotEmpty() && res != null) File(res, input).toURI() else res?.toURI())
   }
 }
 

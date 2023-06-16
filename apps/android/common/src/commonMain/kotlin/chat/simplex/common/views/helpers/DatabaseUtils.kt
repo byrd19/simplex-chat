@@ -39,6 +39,7 @@ object DatabaseUtils {
     }
   }
 
+  // LALAL CHANGE DB FILE NAME ON DESKTOP
   private fun hasDatabase(rootDir: String): Boolean =
     File(rootDir + File.separator + "files_chat.db").exists() && File(rootDir + File.separator + "files_agent.db").exists()
 

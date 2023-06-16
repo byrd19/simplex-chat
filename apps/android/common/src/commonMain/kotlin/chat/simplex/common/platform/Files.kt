@@ -71,7 +71,7 @@ fun getLoadedFilePath(file: CIFile?): String? {
 expect fun rememberFileChooserLauncher(getContent: Boolean, onResult: (URI?) -> Unit): FileChooserLauncher
 
 expect class FileChooserLauncher() {
-  fun launch(input: String)
+  suspend fun launch(input: String)
 }
 
 expect fun URI.inputStream(): InputStream?

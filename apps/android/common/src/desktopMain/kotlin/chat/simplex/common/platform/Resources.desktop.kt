@@ -7,6 +7,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.russhwolf.settings.*
 import dev.icerock.moko.resources.StringResource
 import dev.icerock.moko.resources.desc.desc
+import java.io.File
 import java.util.*
 
 @Composable
@@ -17,9 +18,21 @@ actual fun StringResource.localized(): String = desc().toString()
 
 actual fun isInNightMode() = false
 
-// LALAL
-actual val settings: Settings = PropertiesSettings(Properties())
-actual val settingsThemes: Settings = PropertiesSettings(Properties())
+private val settingsFile =
+  File(platform.configPath + File.separator + "settings.properties")
+    .also { it.parentFile.mkdirs() }
+private val settingsThemesFile =
+  File(platform.configPath + File.separator + "themes.properties")
+    .also { it.parentFile.mkdirs() }
+private val settingsProps =
+  Properties()
+    .also { try { it.load(settingsFile.reader()) } catch (e: Exception) { Properties() } }
+private val settingsThemesProps =
+  Properties()
+    .also { try { it.load(settingsThemesFile.reader()) } catch (e: Exception) { Properties() } }
+
+actual val settings: Settings = PropertiesSettings(settingsProps) { settingsProps.store(settingsFile.writer(), "") }
+actual val settingsThemes: Settings = PropertiesSettings(settingsThemesProps) { settingsThemesProps.store(settingsThemesFile.writer(), "") }
 
 actual fun screenOrientation(): ScreenOrientation = ScreenOrientation.UNDEFINED
 

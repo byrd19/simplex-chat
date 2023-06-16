@@ -15,6 +15,7 @@ import java.io.File
 import java.net.URI
 import javax.imageio.ImageIO
 import javax.swing.JFileChooser
+import kotlin.io.path.toPath
 
 actual fun spannableStringToAnnotatedString(
   text: CharSequence,
@@ -28,11 +29,11 @@ actual fun getLoadedImage(file: CIFile?): ImageBitmap? {
   TODO()
 }
 
-actual fun getFileName(uri: URI): String? = TODO()
+actual fun getFileName(uri: URI): String? = uri.toPath().toFile().name
 
-actual fun getAppFilePath(uri: URI): String? = TODO()
+actual fun getAppFilePath(uri: URI): String? = getFilesDirectory() + File.separator + "app_files"
 
-actual fun getFileSize(uri: URI): Long? = TODO()
+actual fun getFileSize(uri: URI): Long? = uri.toPath().toFile().length()
 
 actual fun getBitmapFromUri(uri: URI, withAlertOnException: Boolean): ImageBitmap? = TODO()
 

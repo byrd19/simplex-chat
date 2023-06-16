@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.LocalView
 import chat.simplex.common.views.helpers.KeyboardState
 import androidx.compose.ui.platform.LocalContext as LocalContext1
 
-actual fun showToast(text: String) = Toast.makeText(androidAppContext, text, Toast.LENGTH_SHORT).show()
+actual fun showToast(text: String, timeout: Long) = Toast.makeText(androidAppContext, text, Toast.LENGTH_SHORT).show()
 
 @Composable
 actual fun LockToCurrentOrientationUntilDispose() {

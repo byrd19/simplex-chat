@@ -1,12 +1,9 @@
-import org.jetbrains.compose.compose
-
 plugins {
   kotlin("multiplatform")
   id("org.jetbrains.compose")
   id("com.android.library")
   id("org.jetbrains.kotlin.plugin.serialization")
   id("dev.icerock.mobile.multiplatform-resources")
-  id("io.github.tomtzook.gradle-cmake") version "1.2.2"
 }
 
 group = "chat.simplex"
@@ -116,63 +113,6 @@ android {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
   }
-}
-
-// LALAL
-/*
-* compose {
-    desktop {
-        application {
-            mainClass = "chat.simplex.common.MainKt"
-            nativeDistributions {
-                targetFormats(
-                    org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg,
-                    org.jetbrains.compose.desktop.application.dsl.TargetFormat.Msi,
-                    org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb
-                )
-                packageName = "simplex"
-                version = "1.0.0"
-            }
-        }
-    }
-}
-* */
-
-cmake {
-  // Run this command to make build for all targets:
-  // ./gradlew common:cmakeBuild -PcrossCompile
-  if (project.hasProperty("crossCompile")) {
-    machines.customMachines.register("linux-amd64") {
-      toolchainFile.set(project.file("../android/src/main/cpp/toolchains/x86_64-linux-gnu-gcc.cmake"))
-    }
-    /*machines.customMachines.register("linux-aarch64") {
-      toolchainFile.set(project.file("../android/src/main/cpp/toolchains/aarch64-linux-gnu-gcc.cmake"))
-    }*/
-    machines.customMachines.register("win-amd64") {
-      toolchainFile.set(project.file("../android/src/main/cpp/toolchains/x86_64-windows-mingw32-gcc.cmake"))
-    }
-    if (machines.host.name == "mac-amd64") {
-      machines.customMachines.register("mac-amd64") {
-        toolchainFile.set(project.file("../android/src/main/cpp/toolchains/x86_64-mac-apple-darwin-gcc.cmake"))
-      }
-    }
-  }
-  val compileMachineTargets = arrayListOf<com.github.tomtzook.gcmake.targets.TargetMachine>(machines.host)
-  compileMachineTargets.addAll(machines.customMachines)
-  targets {
-    val main by creating {
-      cmakeLists.set(file("../android/src/main/cpp/desktop/CMakeLists.txt"))
-      targetMachines.addAll(compileMachineTargets.toSet())
-    }
-  }
-}
-
-tasks.named("clean") {
-  dependsOn(":cmakeClean")
-}
-
-tasks.named("build") {
-  dependsOn(":cmakeBuild")
 }
 
 multiplatformResources {

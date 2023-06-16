@@ -4,5 +4,5 @@ import androidx.compose.runtime.*
 
 @Composable
 actual fun QRCodeScanner(onBarcode: (String) -> Unit) {
-  TODO()
+  //LALAL
 }

@@ -31,7 +31,7 @@ actual class FileChooserLauncher actual constructor() {
     this.launcher = launcher
   }
 
-  actual fun launch(input: String) {
+  actual suspend fun launch(input: String) {
     launcher.launch(input)
   }
 }
